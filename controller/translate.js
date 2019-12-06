@@ -43,7 +43,7 @@ class TranslateController {
             w: item.value
           }
         })
-        console.log(result.status, result.data)
+        // console.log(result.status, result.data)
         if (result.status === 200 && result.data.status === 1) {
           item.value = result.data.content.out
         } else {
@@ -60,6 +60,7 @@ class TranslateController {
   // 翻译eson数组
   async esonTrans (ctx) {
     let arr = ctx.request.body.data
+    console.log(arr, 233333343)
     for (let j = 0; j < arr.length; j++) {
       if (!arr[j].startsWith('#')) {
         let _temp = arr[j].split(':')
@@ -90,6 +91,35 @@ class TranslateController {
     ctx.body = {
       status: 1,
       data: arr
+    }
+  }
+  // 翻译对象{a: '放假地开发', b: '积分都是否定'}
+  async objTrans (ctx) {
+    let obj = ctx.request.body.data
+    console.log(obj)
+    for (let key in obj) {
+      let result = await axios.get('http://fy.iciba.com/ajax.php',{
+        headers: {
+          host: 'fy.iciba.com',
+          refer: 'http://fy.iciba.com'
+        },
+        params: {
+          a: "fy",
+          f: 'zh-CN',
+          t: 'en',
+          w: obj[key]
+        }
+      })
+      console.log(result)
+      if (result.status === 200 && result.data.status === 1) {
+        obj[key] = result.data.content.out
+      } else {
+        obj[key] = '未知错误，请重试'
+      }
+    }
+    ctx.body = {
+      status: 1,
+      data: obj
     }
   }
 }
