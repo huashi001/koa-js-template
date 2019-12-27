@@ -1,27 +1,11 @@
+const getTrans = require('../utils/trans');
 const axios = require('axios');
 class TranslateController {
   //中文翻译成英文
   async translate(ctx){
-    let result = await axios.get('http://fy.iciba.com/ajax.php',{
-      headers: {
-        host: 'fy.iciba.com',
-        refer: 'http://fy.iciba.com'
-      },
-      params: {
-        a: "fy",
-        f: 'zh-CN',
-        t: 'en',
-        w: ctx.query.w
-      }
-    })
-    if(result.status === 200){
-      ctx.body = result.data
-    }else{
-      ctx.body = {
-        "status": 0,
-        "message": '未知错误，请重试'
-      }
-    }
+    let res = await getTrans(ctx.query.w);
+    console.log(res)
+    ctx.body = res;
   }
 
   // 批量翻译
@@ -94,9 +78,9 @@ class TranslateController {
     }
   }
   // 翻译对象{a: '放假地开发', b: '积分都是否定'}
+  // easyiview的翻译使用该接口
   async objTrans (ctx) {
     let obj = ctx.request.body.data
-    console.log(obj)
     for (let key in obj) {
       let result = await axios.get('http://fy.iciba.com/ajax.php',{
         headers: {
@@ -110,7 +94,6 @@ class TranslateController {
           w: obj[key]
         }
       })
-      console.log(result)
       if (result.status === 200 && result.data.status === 1) {
         obj[key] = result.data.content.out
       } else {
@@ -120,6 +103,27 @@ class TranslateController {
     ctx.body = {
       status: 1,
       data: obj
+    }
+  }
+
+  // 翻译嵌套的对象
+  async transComplexObj(ctx) {
+    const json = ctx.request.body.data;
+    async function processObj(obj) {
+      for (let key in obj) {
+        let item = obj[key];
+        if (typeof item === 'string') {
+          const result = await getTrans(item);
+          obj[key] = result;
+        } else if (Object.prototype.toString.call(item) === '[object Object]') {
+          await processObj(item)
+        }
+      }
+    }
+    await processObj(json)
+    ctx.body = {
+      status: 1,
+      body: json
     }
   }
 }

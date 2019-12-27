@@ -6,4 +6,5 @@ transRouter.get('/', trans.translate)
 transRouter.post('/data', trans.batchTrans)
 transRouter.post('/eson', trans.esonTrans)
 transRouter.post('/obj', trans.objTrans)
+transRouter.post('/complexObj', trans.transComplexObj)
 module.exports = transRouter
