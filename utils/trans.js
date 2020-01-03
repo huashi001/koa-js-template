@@ -1,4 +1,5 @@
 const axios = require('axios');
+let count = 0;
 // 不传mode为中->英,mode === 1则英文转中文，暂时不实现
 async function getTrans(word, mode) {
   const result = await axios.get('http://fy.iciba.com/ajax.php',{
@@ -13,6 +14,7 @@ async function getTrans(word, mode) {
       w: word
     }
   })
+  console.log(`接口已调用${count}次`);
   if (result.status === 200 && result.data.status === 1) {
     return result.data.content.out
   } else {
