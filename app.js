@@ -12,6 +12,8 @@ app.use(cors())
 // 指定 public目录为静态资源目录，用来存放 js css images 等
 app.use(staticFiles(path.resolve(__dirname, "./public")))
 
+// 处理文件上传
+
 app.use(bodyParser())
 app.use(router.routes()).use(router.allowedMethods())
 
