@@ -6,4 +6,12 @@ let router = new Router()
 router.use('/trans', trans.routes(), trans.allowedMethods())
 router.use('/page', page.routes(), page.allowedMethods())
 
+router.post('/test', async ctx => {
+  console.log(ctx.request.body, ctx.request.header)
+  ctx.body = {
+    state: 1,
+    data: ctx.request.body
+  }
+})
+
 module.exports = router
