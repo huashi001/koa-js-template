@@ -4,7 +4,7 @@ const Router = require('koa-router')
 const FileController = require('../controller/FileController')
 
 let file = new Router()
-file.get('/', upload.fields([{
+file.post('/', upload.fields([{
   name: 'file',
   maxCount: 1
 }]), FileController.saveFileTemp)

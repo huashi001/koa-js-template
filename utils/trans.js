@@ -14,7 +14,7 @@ async function getTrans(word, mode) {
       w: word
     }
   })
-  console.log(`接口已调用${count}次`);
+  //console.log(`接口已调用${count}次`);
   if (result.status === 200 && result.data.status === 1) {
     return result.data.content.out
   } else {
