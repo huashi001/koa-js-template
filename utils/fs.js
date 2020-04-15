@@ -19,4 +19,7 @@ function delFilesInFolder(path) {
   }
 }
 
+// const str = fs.readFileSync('./Input.js').toString();
+// const x = require('./Input')
+// console.log(x)
 module.exports = delFilesInFolder;

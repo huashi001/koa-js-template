@@ -1,0 +1,29 @@
+<html>
+  <title>测试bridge</title>
+<body>
+  <div>
+    <!-- <h1 onclick='handleClick()'>this is a draw tool!</h1> -->
+    <p onclick='handleClick()'>远程网页（位置localhost:3000）</p>
+    <p id='ran'></p>
+  </div>
+  <script>
+    function handleClick() {
+      const ran = Math.random();
+      document.getElementById('ran').innerHTML = ran
+      window.electronBridge && window.electronBridge.send({
+        type: '',
+        key: 'get-random',
+        fromer: '',
+        receiver: '',
+        windowids: [9],
+        value: ran,
+      })
+    }
+    // electronBridge.on('clear', (e, data) => {
+    //   console.log(data, 'data')
+    //   document.getElementById('ran').innerHTML = data
+    // })
+    // console.log(electronBridge, 'electronBridge')
+  </script>
+</body>
+</html> 
