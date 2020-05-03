@@ -12,7 +12,6 @@
   "dependencies": {
     "@koa/cors": "^2.2.3",
     "@koa/multer": "^2.0.2",
-    "glob": "^7.1.6",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
