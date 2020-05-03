@@ -1,14 +1,10 @@
 const Router = require('koa-router')
-const trans = require('./trans')
-const page = require('./page')
-const file = require('./file')
-const tool = require('./tool')
+const hello = require('./hello')
+const home = require('./home')
 
 let router = new Router()
-router.use('/trans', trans.routes(), trans.allowedMethods())
-router.use('/page', page.routes(), page.allowedMethods())
-router.use('/file', file.routes(), page.allowedMethods())
-router.use('/tool', tool.routes(), tool.allowedMethods())
+router.use('/hello', hello.routes(), hello.allowedMethods())
+router.use('/home', home.routes(), home.allowedMethods())
 
 router.post('/test', async ctx => {
   console.log(ctx.request.body, ctx.request.header)
